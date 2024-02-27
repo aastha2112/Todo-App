@@ -5,14 +5,32 @@ import TodoInput from "./components/TodoInput";
 import TodoList from "./components/TodoList";
 import TodoStatus from "./components/TodoStatus";
 
+// currentState = 'all' | 'active' | 'completed'
+
 function App(props) {
   const [todos, setTodos] = useState([]);
-  const [completedTodos, setCompletedTodos] = useState([]);
-  const [activeTodos, setActiveTodos] = useState([]);
+  const [currentState, setCurrentState] = useState("all");
 
-  function handleToggleCompletedTodos(id) {
-    if (todos.find((todo) => id === todo.id)) {
-    }
+  function handleToggleCompletedTodo(todoId) {
+    const todoIndex = todos.findIndex((todo) => todo.id === todoId);
+
+    const todosCopy = [...todos];
+
+    todosCopy[todoIndex].isCompleted = !todosCopy[todoIndex].isCompleted;
+
+    setTodos(todosCopy);
+  }
+
+  function handleChangeState(state) {
+    setCurrentState(state);
+  }
+
+  let allTodos = todos;
+
+  if (currentState === "completed") {
+    allTodos = todos.filter((todo) => todo.isCompleted);
+  } else if (currentState === "active") {
+    allTodos = todos.filter((todo) => !todo.isCompleted);
   }
 
   return (
@@ -22,13 +40,16 @@ function App(props) {
         <div className="flex flex-col items-start h-3/6 w-4/5 justify-around">
           <TodoInput todo={todos} setTodos={setTodos} />
 
-          <TodoList todos={todos} setTodos={setTodos} />
+          <TodoList
+            todos={allTodos}
+            setTodos={setTodos}
+            handleToggleCompletedTodo={handleToggleCompletedTodo}
+          />
           {todos.length > 0 && (
             <TodoStatus
-              itemsLeft={todos.length}
-              todso={todos}
-              active={activeTodos}
-              completed={completedTodos}
+              itemsLeft={allTodos.length}
+              handleChangeState={handleChangeState}
+              currentState={currentState}
             />
           )}
         </div>
