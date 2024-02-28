@@ -14,11 +14,7 @@ function TodoList({ todos, setTodos, handleToggleCompletedTodo }) {
     />
   ));
 
-  return (
-    <div className=" p-5 flex h-4/5 w-full justify-evenly">
-      <ul className="w-full">{todoListItems}</ul>
-    </div>
-  );
+  return <ul>{todoListItems}</ul>;
 }
 
 export default TodoList;

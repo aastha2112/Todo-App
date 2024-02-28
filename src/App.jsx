@@ -25,6 +25,11 @@ function App(props) {
     setCurrentState(state);
   }
 
+  function handleClearCompleted() {
+    const clearCompletedTodos = todos.filter((todo) => !todo.isCompleted);
+    setTodos(clearCompletedTodos);
+  }
+
   let allTodos = todos;
 
   if (currentState === "completed") {
@@ -35,23 +40,26 @@ function App(props) {
 
   return (
     <>
-      <div className="flex flex-col items-center h-screen justify-center">
-        <Heading title="Todos" />
-        <div className="flex flex-col items-start h-3/6 w-4/5 justify-around">
-          <TodoInput todo={todos} setTodos={setTodos} />
+      <Heading title="todos" />
 
-          <TodoList
-            todos={allTodos}
-            setTodos={setTodos}
-            handleToggleCompletedTodo={handleToggleCompletedTodo}
-          />
-          {todos.length > 0 && (
-            <TodoStatus
-              itemsLeft={allTodos.length}
-              handleChangeState={handleChangeState}
-              currentState={currentState}
+      <div className="flex justify-center">
+        <div className="flex  flex-col justify-center items-center w-1/3">
+          <TodoInput todo={todos} setTodos={setTodos} />
+          <div className="flex flex-col justify-center w-full">
+            <TodoList
+              todos={allTodos}
+              setTodos={setTodos}
+              handleToggleCompletedTodo={handleToggleCompletedTodo}
             />
-          )}
+            {todos.length > 0 && (
+              <TodoStatus
+                itemsLeft={allTodos.length}
+                handleChangeState={handleChangeState}
+                currentState={currentState}
+                handleClearCompleted={handleClearCompleted}
+              />
+            )}
+          </div>
         </div>
       </div>
     </>

@@ -8,14 +8,16 @@ function TodoInput({ todos, setTodos }) {
   };
 
   const handleAddTodo = () => {
-    const todo = {
-      id: Date.now(),
-      value: todoValue,
-      isCompleted: false,
-    };
+    if (todoValue.length > 0) {
+      const todo = {
+        id: Date.now(),
+        value: todoValue,
+        isCompleted: false,
+      };
 
-    setTodos((todos) => [...todos, todo]);
-    setTodoValue("");
+      setTodos((todos) => [...todos, todo]);
+      setTodoValue("");
+    }
 
     // console.log({ todo });
   };
@@ -23,21 +25,21 @@ function TodoInput({ todos, setTodos }) {
   // console.log(todoValue);
 
   return (
-    <div className="flex justify-center w-full p-3 ">
+    <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleAddTodo();
+      }}
+      className="w-full todoInput"
+    >
       <input
-        className="outline-none border-2 p-5 m-4"
+        className="outline-none h-16 shadow-md p-4 text-center w-full italic text-2xl"
         type="text"
         placeholder="What needs to be done?"
         value={todoValue}
         onChange={HandleInputTodo}
       />
-      <button
-        className="p-4 text-amber-900 font-medium"
-        onClick={handleAddTodo}
-      >
-        Add Task
-      </button>
-    </div>
+    </form>
   );
 }
 
