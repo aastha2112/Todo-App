@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import Heading from "./components/Heading";
 import TodoInput from "./components/TodoInput";
@@ -6,10 +6,29 @@ import TodoList from "./components/TodoList";
 import TodoStatus from "./components/TodoStatus";
 
 // currentState = 'all' | 'active' | 'completed'
+let hasRendered = false;
 
 function App(props) {
   const [todos, setTodos] = useState([]);
   const [currentState, setCurrentState] = useState("all");
+
+  // When Component mounted
+  useEffect(() => {
+    console.log("Component Mounted Succesfully");
+    const todosString = JSON.parse(localStorage.getItem("todos"));
+
+    setTodos(todosString);
+  }, []);
+
+  // When State updated
+  useEffect(() => {
+    if (!hasRendered) {
+      hasRendered = true;
+      return;
+    }
+
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   function handleToggleCompletedTodo(todoId) {
     const todoIndex = todos.findIndex((todo) => todo.id === todoId);

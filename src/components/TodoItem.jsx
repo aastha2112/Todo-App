@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function TodoItem({
   todo,
@@ -7,7 +7,13 @@ export default function TodoItem({
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
-  function mouseEntered() {}
+  // useEffect(() => {
+  //   // When componenent removed
+  //   return () => {
+  //     console.log({ todo });
+  //   };
+  // }, []);
+
   return (
     <li
       key={todo.id}

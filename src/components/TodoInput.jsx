@@ -18,11 +18,7 @@ function TodoInput({ todos, setTodos }) {
       setTodos((todos) => [...todos, todo]);
       setTodoValue("");
     }
-
-    // console.log({ todo });
   };
-
-  // console.log(todoValue);
 
   return (
     <form
