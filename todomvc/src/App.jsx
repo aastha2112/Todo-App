@@ -14,7 +14,6 @@ function App(props) {
 
   // When Component mounted
   useEffect(() => {
-    console.log("Component Mounted Succesfully");
     const todosString = JSON.parse(localStorage.getItem("todos"));
 
     setTodos(todosString);
