@@ -1,9 +1,12 @@
 import Checkbox from "./Checkbox";
 
-function TermsAndConditions() {
+function TermsAndConditions(props) {
   return (
     <div className="flex">
-      <Checkbox />
+      <Checkbox
+        checkboxValue={props.checkboxValue}
+        handleChange={props.handleChange}
+      />
       <p className="pl-[24px] w-[412px] h-[48px]">
         By creating an account, I agree to our{" "}
         <a className="underline" href="#">
