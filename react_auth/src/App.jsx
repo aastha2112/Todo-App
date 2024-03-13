@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUp from "./containers/Signup";
 import { Toaster } from "react-hot-toast";
 import Login from "./containers/Login";
+import Home from "./containers/Home";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const router = createBrowserRouter([
   {
     path: "/login",
     element: <Login />,
+  },
+  {
+    path: "/",
+    element: <Home />,
   },
 ]);
 

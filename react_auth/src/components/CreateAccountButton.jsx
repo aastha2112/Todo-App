@@ -8,9 +8,7 @@ function CreateAccountButton(props) {
       }
       // disabled={props.formDisabled}
     >
-      <div className="text-white text-[22px] font-mediumgit">
-        Create an account
-      </div>
+      <div className="text-white text-[22px] font-mediumgit">{props.title}</div>
     </button>
   );
 }

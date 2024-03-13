@@ -2,9 +2,10 @@ import Input from "../../components/Input";
 import TermsAndConditions from "../../components/TermsAndConditions";
 import CreateAccountButton from "../../components/CreateAccountButton";
 import { useState } from "react";
-// import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 import toast from "react-hot-toast";
+import { checkValidEmail } from "../../helpers";
 
 function SignUpForm() {
   const [isDisabled, setIsDisabled] = useState(false);
@@ -24,6 +25,7 @@ function SignUpForm() {
     confirmPassword: "",
     TnCChecked: false,
   });
+  const navigate = useNavigate();
 
   function handleSubmit() {
     let isFirstNameValid = formState.firstName.length > 3;
@@ -52,9 +54,7 @@ function SignUpForm() {
       errorMessage("lastName", null);
     }
 
-    let isEmailValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(
-      formState.email
-    );
+    let isEmailValid = checkValidEmail(formState.email);
     if (!isEmailValid) {
       errorMessage("email", "Invalid email address. Please check your input.");
     } else {
@@ -110,17 +110,22 @@ function SignUpForm() {
       formState.password === formState.confirmPassword &&
       formState.TnCChecked
     ) {
-      //   setIsDisabled(false);
+      let users = JSON.parse(localStorage.getItem("users")) || [];
+      //   console.log({ users });
+      let existingUser = users.find((user) => user.email === formState.email);
+      console.log({ existingUser });
 
-      console.log("I need to submit this form");
+      if (!existingUser) {
+        users.push(formState);
+        localStorage.setItem("users", JSON.stringify(users));
+        console.log(users);
+        toast.success("Signup successfull");
+        navigate("/login");
+      } else {
+        toast.error("Email already exist");
+      }
+      //   localStorage.setItem("`1`", JSON.stringify(formState));
     }
-    console.log({
-      isEmailValid,
-      isFirstNameValid,
-      isLastNameValid,
-      isConfirmPasswordValid,
-      isPasswordValid,
-    });
   }
 
   function errorMessage(errorField, errorValue) {
@@ -130,10 +135,7 @@ function SignUpForm() {
     }));
   }
 
-  //   console.log(isDisabled);
-
-  //   console.log(formState);
-  console.log(errors);
+  //   console.log(errors);
   function handleOnChange(fieldName, fieldValue) {
     setFormState({ ...formState, [fieldName]: fieldValue });
   }
@@ -207,7 +209,11 @@ function SignUpForm() {
         checkboxValue={formState.TnCChecked}
         handleChange={handleTnCCheckbox}
       />
-      <CreateAccountButton formDisabled={isDisabled} onSubmit={handleSubmit} />
+      <CreateAccountButton
+        formDisabled={isDisabled}
+        onSubmit={handleSubmit}
+        title="Create an account"
+      />
     </form>
   );
 }
