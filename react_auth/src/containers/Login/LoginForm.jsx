@@ -34,6 +34,7 @@ function LoginForm() {
 
   function handleSubmit() {
     let isEmailValid = checkValidEmail(loginFormState.email);
+
     if (!isEmailValid) {
       errorMessage("email", "*Invalid email address*");
     } else {
@@ -54,6 +55,8 @@ function LoginForm() {
     let existingUser = users.find(
       (user) => user.email === loginFormState.email
     );
+    let currentUser = { email: existingUser.email, loginAt: Date.now() };
+
     if (!existingUser) {
       toast.error("Invalid Credentials");
       return;
@@ -61,7 +64,6 @@ function LoginForm() {
     // console.log({ existingUser });
 
     if (existingUser.password === loginFormState.password) {
-      let currentUser = { email: existingUser.email, loginAt: Date.now() };
       localStorage.setItem("currentUser", JSON.stringify(currentUser));
       console.log({ existingUser });
       console.log(existingUser.password);
@@ -72,22 +74,15 @@ function LoginForm() {
     }
   }
 
-  useEffect(() => {
-    let currentUser = localStorage.getItem("currentUser");
-    if (currentUser) {
-      navigate("/");
-    }
-  }, []);
-
   return (
-    <div className="h-[877px] flex  justify-center">
-      <div className="flex justify-center flex-col items-center h-[781px] ">
+    <div className="h-[877px] flex  justify-center mobile:w-full mobile:flex ">
+      <div className="flex justify-center flex-col items-center h-[781px] mobile:w-full mobile:p-3 mobile:flex mobile:flex-col mobile:justify-start mobile:pt-[40px]">
         <p className="h-[48px] text-[32px] text-[#333333] font-medium">
           Log in
         </p>
         <p>
           Don't have an account?{" "}
-          <button onClick={() => navigate("/signup")} className="underline">
+          <button onClick={() => navigate("/signup")} className="underline ">
             Sign up
           </button>{" "}
         </p>
@@ -98,6 +93,7 @@ function LoginForm() {
           onSubmit={(event) => {
             event.preventDefault();
           }}
+          className="mobile:flex mobile:flex-col mobile:w-[90%]"
         >
           <Input
             title="Email address or username"
@@ -116,7 +112,7 @@ function LoginForm() {
             fieldName={"password"}
             error={errorMsg.password}
           />
-          <button className="underline flex w-full pr-4 justify-end items-end">
+          <button className="underline flex w-full pr-4 justify-end items-end mobile:pb-7">
             Forgot your password
           </button>
           <div className="flex w-full ">

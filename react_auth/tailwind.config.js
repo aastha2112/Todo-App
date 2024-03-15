@@ -10,6 +10,12 @@ export default {
         "input-border": "rgba(102, 102, 102, 0.35)",
         disabled: "rgba(102, 102, 102, 0.25)",
       },
+      screens: {
+        mobile: {
+          max: "480px",
+          min: "0px",
+        },
+      },
     },
   },
   plugins: [],

@@ -7,7 +7,7 @@ function TermsAndConditions(props) {
         checkboxValue={props.checkboxValue}
         handleChange={props.handleChange}
       />
-      <p className="pl-[24px] w-[412px] h-[48px]">
+      <p className="pl-[24px] w-[412px] h-[48px] mobile:pl-[18px] mobile:mb-8">
         By creating an account, I agree to our{" "}
         <a className="underline" href="#">
           Terms of use

@@ -28,7 +28,7 @@ function Input(props) {
       <input
         className={
           (!props.error ? "mb-[24px]" : "") +
-          " mt-[4px] p-2 h-[56px] w-[534px] rounded-xl border-input-border border-2"
+          " mt-[4px] p-2 h-[56px] w-[534px] rounded-xl border-input-border border-2 mobile:w-full"
         }
         type={togglePwdVisibility ? "text" : props.type}
         value={props.value}

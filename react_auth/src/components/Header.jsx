@@ -4,7 +4,7 @@ function Header() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex items-center border-b-2 py-[16px]">
+    <div className="flex items-center border-b-2 py-[16px] mobile:w-full">
       <div className="flex flex-1 justify-center items-center">
         <svg
           width="40"
@@ -21,7 +21,7 @@ function Header() {
           onClick={() => {
             navigate("/login");
           }}
-          className="border px-3 py-1 m-2 h-[40px] w-[98px] rounded-md border-login-border"
+          className="border px-3 py-1 m-2 h-[40px] w-[98px] rounded-md border-login-border mobile:hidden"
         >
           Log in
         </button>
